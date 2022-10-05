@@ -7,7 +7,7 @@ RUN pip install Flask gunicorn
 
 # 3
 COPY src/ /app
-WORKDIR /server
+WORKDIR /app
 
 # 4
 ENV PORT 8080
