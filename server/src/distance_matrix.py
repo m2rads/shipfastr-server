@@ -16,10 +16,11 @@ import json
 import urllib.request
 
 
+
 def create_data():
   """Creates the data."""
   data = {}
-  data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
+  # data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
   data['addresses'] = ['3610+Hacks+Cross+Rd+Memphis+TN', # depot
                        '1921+Elvis+Presley+Blvd+Memphis+TN',
                        '149+Union+Avenue+Memphis+TN',

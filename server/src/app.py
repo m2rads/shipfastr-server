@@ -5,8 +5,12 @@ import time
 app = Flask(__name__)
 
 
+incomings = [
 
+    {"source": "source address"},
+    {"destinations": ['address 1', 'address 2', 'address 3', 'address 4', 'address 5'] } 
 
+]
 
 @app.route('api/distancematrix')
 def index():

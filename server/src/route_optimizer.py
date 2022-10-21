@@ -8,8 +8,13 @@
    Distances are in meters.
 """
 
+from dis import dis
+from turtle import distance
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
+
+import distance_matrix 
+
 
 
 def create_data_model():
@@ -77,7 +82,7 @@ def create_data_model():
             342, 0, 764, 194
         ],
         [
-            776, 868, 1552, 560, 674, 1050, 1278, 742, 1084, 810, 1152, 274,
+            776, 868, 1552, 560, 674, 1050, 3278, 742, 1084, 810, 1152, 274,
             388, 422, 764, 0, 798
         ],
         [
@@ -88,6 +93,19 @@ def create_data_model():
     data['num_vehicles'] = 4
     data['depot'] = 0
     return data
+
+def create_demo_distance_matrix(): 
+    data = distance_matrix.create_data()
+    data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
+    matrices = distance_matrix.create_distance_matrix(data)
+    distance_matrix_data = {}
+    distance_matrix_data["distance_matrix"] = matrices
+    distance_matrix_data["num_vehicles"] = 5
+    distance_matrix_data['depot'] = 0
+
+    print(distance_matrix_data)
+
+    return distance_matrix_data
 
 
 def print_solution(data, manager, routing, solution):
@@ -110,12 +128,36 @@ def print_solution(data, manager, routing, solution):
         max_route_distance = max(route_distance, max_route_distance)
     print('Maximum of the route distances: {}m'.format(max_route_distance))
 
+def create_response(data, manager, routing, solution):
+    reponse_data = {}
+    max_route_distance = 0
+    for vehicle_id in range(data['num_vehicles']):
+            index = routing.Start(vehicle_id)
+            # plan_output = 'Route for vehicle {}:\n'.format(vehicle_id)
+            reponse_data[f'{vehicle_id}'] = []
+            route_distance = 0
+            while not routing.IsEnd(index):
+                # plan_output += ' {} -> '.format(manager.IndexToNode(index))
+                reponse_data[f'{vehicle_id}'].append(manager.IndexToNode(index))
+                previous_index = index
+                index = solution.Value(routing.NextVar(index))
+                route_distance += routing.GetArcCostForVehicle(
+                    previous_index, index, vehicle_id)
+            # plan_output += '{}\n'.format(manager.IndexToNode(index))
+            reponse_data[f'{vehicle_id}'].append(manager.IndexToNode(index))
+            # plan_output += 'Distance of the route: {}m\n'.format(route_distance)
+            
+            max_route_distance = max(route_distance, max_route_distance)
+    print(reponse_data)
+    return reponse_data
+
 
 
 def main():
     """Entry point of the program."""
     # Instantiate the data problem.
-    data = create_data_model()
+    # data = create_data_model()
+    data = create_demo_distance_matrix()
 
     # Create the routing index manager.
     manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
@@ -142,8 +184,8 @@ def main():
     dimension_name = 'Distance'
     routing.AddDimension(
         transit_callback_index,
-        0,  # no slack
-        3000,  # vehicle maximum travel distance
+        2,  # no slack
+        100000,  # vehicle maximum travel distance
         True,  # start cumul to zero
         dimension_name)
     distance_dimension = routing.GetDimensionOrDie(dimension_name)
@@ -159,7 +201,8 @@ def main():
 
     # Print solution on console.
     if solution:
-        print_solution(data, manager, routing, solution)
+        # print_solution(data, manager, routing, solution)
+        create_response(data, manager, routing, solution)
     else:
         print('No solution found !')
 
