@@ -6,6 +6,9 @@
    http://en.wikipedia.org/wiki/Vehicle_routing_problem.
 
    Distances are in meters.
+
+   Source for this code: 
+   https://developers.google.com/optimization/routing/vrp.
 """
 
 from dis import dis
@@ -13,39 +16,8 @@ from turtle import distance
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 
-import distance_matrix 
 
 
-def create_demo_distance_matrix(): 
-    data = distance_matrix.create_data()
-    data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
-    matrices = distance_matrix.create_distance_matrix(data)
-    distance_matrix_data = {}
-    distance_matrix_data["distance_matrix"] = matrices
-    distance_matrix_data["num_vehicles"] = 5
-    distance_matrix_data['depot'] = 0
-    return distance_matrix_data
-
-
-def print_solution(data, manager, routing, solution):
-    """Prints solution on console."""
-    print(f'Objective: {solution.ObjectiveValue()}')
-    max_route_distance = 0
-    for vehicle_id in range(data['num_vehicles']):
-        index = routing.Start(vehicle_id)
-        plan_output = 'Route for vehicle {}:\n'.format(vehicle_id)
-        route_distance = 0
-        while not routing.IsEnd(index):
-            plan_output += ' {} -> '.format(manager.IndexToNode(index))
-            previous_index = index
-            index = solution.Value(routing.NextVar(index))
-            route_distance += routing.GetArcCostForVehicle(
-                previous_index, index, vehicle_id)
-        plan_output += '{}\n'.format(manager.IndexToNode(index))
-        plan_output += 'Distance of the route: {}m\n'.format(route_distance)
-        print(plan_output)
-        max_route_distance = max(route_distance, max_route_distance)
-    print('Maximum of the route distances: {}m'.format(max_route_distance))
 
 def create_response(data, manager, routing, solution):
     reponse_data = {}
@@ -69,8 +41,6 @@ def create_response(data, manager, routing, solution):
 def optimizer(source):
     """Entry point of the program."""
     # Instantiate the data problem.
-    # data = create_data_model()
-    # data = create_demo_distance_matrix()
     data = source
 
     # Create the routing index manager.
@@ -113,14 +83,9 @@ def optimizer(source):
     # Solve the problem.
     solution = routing.SolveWithParameters(search_parameters)
 
-    # Print solution on console.
+    # return solution.
     if solution:
-        # print_solution(data, manager, routing, solution)
         return create_response(data, manager, routing, solution)
     else:
-        # print('No solution found !')
         return "no solution found!"
 
-
-# if __name__ == '__main__':
-#     main()
