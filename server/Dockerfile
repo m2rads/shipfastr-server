@@ -1,12 +1,14 @@
 # 1 
-FROM python:3.7
+FROM python:3.9
 
-# 2
-RUN pip install -r requirements.txt
+
 
 # 3
 COPY src/ /app
 WORKDIR /app
+
+# 2
+RUN pip3 install -r requirements.txt
 
 # 4
 ENV PORT 8080

@@ -1,8 +1,7 @@
-from flask import Flask
+from flask import Flask, jsonify
 from route_optimizer import optimizer, create_demo_distance_matrix
 import os
 import time
-import json
 
 app = Flask(__name__)
 
@@ -11,7 +10,7 @@ def demo():
     data = create_demo_distance_matrix()
     res = optimizer(data)
     # jsonResult = json.loads(res)
-    print(res)
+    print(jsonify(res))
     return res
 
 
