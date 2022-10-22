@@ -102,9 +102,6 @@ def create_demo_distance_matrix():
     distance_matrix_data["distance_matrix"] = matrices
     distance_matrix_data["num_vehicles"] = 5
     distance_matrix_data['depot'] = 0
-
-    print(distance_matrix_data)
-
     return distance_matrix_data
 
 
@@ -148,16 +145,16 @@ def create_response(data, manager, routing, solution):
             # plan_output += 'Distance of the route: {}m\n'.format(route_distance)
             
             max_route_distance = max(route_distance, max_route_distance)
-    print(reponse_data)
     return reponse_data
 
 
 
-def main():
+def optimizer(source):
     """Entry point of the program."""
     # Instantiate the data problem.
     # data = create_data_model()
-    data = create_demo_distance_matrix()
+    # data = create_demo_distance_matrix()
+    data = source
 
     # Create the routing index manager.
     manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
@@ -202,10 +199,11 @@ def main():
     # Print solution on console.
     if solution:
         # print_solution(data, manager, routing, solution)
-        create_response(data, manager, routing, solution)
+        return create_response(data, manager, routing, solution)
     else:
-        print('No solution found !')
+        # print('No solution found !')
+        return "no solution found!"
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()

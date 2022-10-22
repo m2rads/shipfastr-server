@@ -94,13 +94,13 @@ def build_distance_matrix(response):
 ########
 # Main #
 ########
-def main():
-  """Entry point of the program"""
-  # Create the data.
-  data = create_data()
-  addresses = data['addresses']
-  API_key = data['API_key']
-  distance_matrix = create_distance_matrix(data)
-  print(distance_matrix)
-if __name__ == '__main__':
-  main()
+# def main():
+#   """Entry point of the program"""
+#   # Create the data.
+#   data = create_data()
+#   addresses = data['addresses']
+#   API_key = data['API_key']
+#   distance_matrix = create_distance_matrix(data)
+#   print(distance_matrix)
+# if __name__ == '__main__':
+#   main()
