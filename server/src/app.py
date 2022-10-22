@@ -11,7 +11,10 @@ app = Flask(__name__)
 def demo():
     data = create_demo_distance_matrix()
     optimized_data = optimizer(data)
-    response = make_response(jsonify(optimized_data), 200)
+    if (type(optimized_data) is str ): 
+        response = make_response(jsonify(optimized_data), 500)
+    else: 
+        response = make_response(jsonify(optimized_data), 200)
     return response
 
 
