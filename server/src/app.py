@@ -1,17 +1,18 @@
-from flask import Flask, jsonify
-from route_optimizer import optimizer, create_demo_distance_matrix
+from flask import Flask, jsonify, make_response
+from route_optimizer import optimizer
+from demo_data import create_demo_distance_matrix
 import os
 import time
+
 
 app = Flask(__name__)
 
 @app.route('/api/demo')
 def demo():
     data = create_demo_distance_matrix()
-    res = optimizer(data)
-    # jsonResult = json.loads(res)
-    print(jsonify(res))
-    return res
+    optimized_data = optimizer(data)
+    response = make_response(jsonify(optimized_data), 200)
+    return response
 
 
 
