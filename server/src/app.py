@@ -21,7 +21,7 @@ def demo():
 @app.route('/api/optimize', methods=['GET'])
 def optimize(request): 
     data = request.get_json()
-    
+    # get the data from the request body and create repsonse from route_optiomzer
     return "hello"
 
 
