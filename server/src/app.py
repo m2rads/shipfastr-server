@@ -7,7 +7,7 @@ import time
 
 app = Flask(__name__)
 
-@app.route('/api/demo')
+@app.route('/api/demo', methods=['GET'])
 def demo():
     data = create_demo_distance_matrix()
     optimized_data = optimizer(data)
@@ -17,6 +17,12 @@ def demo():
         response = make_response(jsonify(optimized_data), 200)
     return response
 
+
+@app.route('/api/optimize', methods=['GET'])
+def optimize(request): 
+    data = request.get_json()
+    
+    return "hello"
 
 
 if __name__ == '__main__':
