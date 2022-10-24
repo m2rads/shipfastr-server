@@ -1,7 +1,7 @@
 import distance_matrix 
 
 
-def create_data():
+def create_demo_data():
   """Creates the data."""
   data = {}
   # data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
@@ -26,7 +26,7 @@ def create_data():
 
 
 def create_demo_distance_matrix(): 
-    data = create_data()
+    data = create_demo_data()
     data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
     matrices = distance_matrix.create_distance_matrix(data)
     distance_matrix_data = {}
