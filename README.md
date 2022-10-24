@@ -4,9 +4,13 @@
 
 `pip3 install -r requirements.txt `
 
-## To run the server run the following command inside the same directory:
+## To run the development server run the following command inside the same directory:
 
 `flask run`
+
+## To run the server using Gunicorn option, run the following command:
+
+`gunicorn --bind :$PORT --workers 1 --threads 8 app:app`
 
 ## Note: The demo data is built inside demo_data.py
 
