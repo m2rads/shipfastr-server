@@ -18,3 +18,7 @@ To create a distance matrix, you need to pass your addresses to
 This method devides your array of addresses into a group of 16 and sends a request to 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial' to get the distance matrix.
 
 For more infromation on this, please visit this page: 'http://en.wikipedia.org/wiki/Vehicle_routing_problem'
+
+## Caution: that you need to provide your Google API key as the first index of your Address array in order to get the distance matrces
+
+## Route optimzer creates the response in a json format.
