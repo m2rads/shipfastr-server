@@ -15,6 +15,12 @@ import requests
 import json
 import urllib.request
 
+def create_data(demo_data): 
+  data = {} 
+  data["addresses"] = demo_data
+  data["API_key"] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
+  return data
+
 
 def create_distance_matrix(data):
   addresses = data["addresses"]
