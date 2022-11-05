@@ -22,7 +22,7 @@ from ortools.constraint_solver import pywrapcp
 def create_response(data, manager, routing, solution):
     reponse_data = {}
     max_route_distance = 0
-    for vehicle_id in range(data['num_vehicles']):
+    for vehicle_id in range(5): #data['num_vehicles']
             index = routing.Start(vehicle_id)
             reponse_data[f'{vehicle_id}'] = []
             route_distance = 0
@@ -44,8 +44,9 @@ def optimizer(source):
     data = source
 
     # Create the routing index manager.
-    manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
-                                           data['num_vehicles'], data['depot'])
+    # manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
+    #                                        data['num_vehicles'], data['depot'])
+    manager = pywrapcp.RoutingIndexManager(len(data), 5, 0)
 
     # Create Routing Model.
     routing = pywrapcp.RoutingModel(manager)

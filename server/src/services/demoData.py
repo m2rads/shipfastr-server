@@ -1,4 +1,4 @@
-import distance_matrix 
+from .distanceMatrix import create_distance_matrix
 
 
 def create_demo_data():
@@ -25,10 +25,9 @@ def create_demo_data():
   return data
 
 
-def create_demo_distance_matrix(): 
+def create_demo_distance_matrix():
     data = create_demo_data()
-    data['API_key'] = 'AIzaSyAljGQx6PV8wK63qHQXjl5FJ3UZDeXta2Y'
-    matrices = distance_matrix.create_distance_matrix(data)
+    matrices = create_distance_matrix(data)
     distance_matrix_data = {}
     distance_matrix_data["distance_matrix"] = matrices
     distance_matrix_data["num_vehicles"] = 5

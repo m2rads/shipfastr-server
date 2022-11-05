@@ -1,6 +1,9 @@
-from flask import Flask, jsonify, make_response
-from route_optimizer import optimizer
-from demo_data import create_demo_distance_matrix
+import imp
+from flask import Flask, jsonify, make_response, request
+from services.routeOptimizer import optimizer
+from services.distanceMatrix import create_distance_matrix
+from services.demoData import create_demo_distance_matrix
+from services.navigation import Navigation
 import os
 import time
 
@@ -18,11 +21,19 @@ def demo():
     return response
 
 
-@app.route('/api/optimize', methods=['GET'])
-def optimize(request): 
-    data = request.get_json()
-    # get the data from the request body and create repsonse from route_optiomzer
-    return "hello"
+@app.route('/api/optimize', methods=['POST'])
+def optimize():
+    try: 
+        data = request.get_json()
+        # get the data from the request body and create repsonse from route_optimizer
+        distance_matrix = create_distance_matrix(data)
+        routes = optimizer(distance_matrix)
+        #Get directions from Navigation class
+        directions = Navigation().find_vehicle_directions(routes, data['addresses'])
+        return make_response(jsonify(routes), 200)
+    except Exception as ex:
+        return make_response(jsonify({'Error': ex}), 500)
+
 
 
 if __name__ == '__main__':

@@ -14,6 +14,8 @@ from ortools.constraint_solver import pywrapcp
 import requests
 import json
 import urllib.request
+from dotenv import load_dotenv
+import os
 
 def create_data(demo_data): 
   data = {} 
@@ -23,8 +25,9 @@ def create_data(demo_data):
 
 
 def create_distance_matrix(data):
+  load_dotenv()
   addresses = data["addresses"]
-  API_key = data["API_key"]
+  API_key = os.getenv('GCP_API_Key')
   # Distance Matrix API only accepts 100 elements per request, so get rows in multiple requests.
   max_elements = 100
   num_addresses = len(addresses) # 16 in this example.
