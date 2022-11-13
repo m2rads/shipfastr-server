@@ -29,8 +29,8 @@ def optimize():
         distance_matrix = create_distance_matrix(data)
         routes = optimizer(distance_matrix)
         #Get directions from Navigation class
-        directions = Navigation().find_vehicle_directions(routes, data['addresses'])
-        return make_response(jsonify(routes), 200)
+        directions = Navigation(routes, data['addresses']).find_vehicle_directions()
+        return make_response(jsonify(directions), 200)
     except Exception as ex:
         return make_response(jsonify({'Error': ex}), 500)
 
